@@ -30,6 +30,9 @@ export class Tab2Page {
     addIcons({ camera });
   }
 
+  async ngOnInit() {
+    await this.photoService.loadSaved();
+  }
 
   addPhotoToGallery() {
     this.photoService.addNewToGallery();
