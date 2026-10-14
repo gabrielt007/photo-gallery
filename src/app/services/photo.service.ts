@@ -10,7 +10,9 @@ import { Preferences } from '@capacitor/preferences';
 export class PhotoService {
 
     public photos = signal<UserPhoto[]>([]);
+
     private PHOTO_STORAGE: string = 'photos';
+
     public async addNewToGallery() {
 
         const capturedPhoto = await Camera.getPhoto({
@@ -65,8 +67,7 @@ export class PhotoService {
 
     public async loadSaved() {
         const { value: photoList } = await Preferences.get({ key: this.PHOTO_STORAGE });
-        this.photos.set((photoList ? JSON.parse(photoList) : []) as UserPhoto[]);
-
+        const photos = (photoList ? JSON.parse(photoList) : []) as UserPhoto[];
         for (const photo of photos) {
             
             const file = await Filesystem.readFile({

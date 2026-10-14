@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -21,7 +21,7 @@ import { PhotoService } from '../services/photo.service';
   styleUrls: ['tab2.page.scss'],
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonFab, IonFabButton, IonIcon],
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
 
   public photoService = inject(PhotoService);
 
