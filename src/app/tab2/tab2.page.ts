@@ -10,16 +10,18 @@ import {
   IonFab,
   IonFabButton,
   IonIcon,
+  IonButton,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { camera } from 'ionicons/icons';
+import { camera, trash } from 'ionicons/icons';
 import { PhotoService } from '../services/photo.service';
+import { UserPhoto } from '../services/photo.service';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonFab, IonFabButton, IonIcon],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonFab, IonFabButton, IonIcon, IonButton],
 })
 export class Tab2Page implements OnInit {
 
@@ -27,7 +29,7 @@ export class Tab2Page implements OnInit {
 
   constructor() {
 
-    addIcons({ camera });
+    addIcons({ camera, trash });
   }
 
   async ngOnInit() {
@@ -36,5 +38,9 @@ export class Tab2Page implements OnInit {
 
   addPhotoToGallery() {
     this.photoService.addNewToGallery();
+  }
+
+  deletePhoto(photo: UserPhoto, position: number) {
+    this.photoService.deletePicture(photo, position);
   }
 }

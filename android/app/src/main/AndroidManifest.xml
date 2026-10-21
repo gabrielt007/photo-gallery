@@ -38,4 +38,18 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature
+    android:name="android.hardware.camera"
+    android:required="false" />
+    <!-- Permisos para Archivos / Galería (Android 12 o inferior) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+
+    <!-- Permisos para Galería en Android 13+ (API 33+) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+
+    <!-- Requerido para borrar fotos de la galería en Android 11+ (API 30+) -->
+    <uses-permission android:name="android.permission.MANAGE_MEDIA" />
 </manifest>

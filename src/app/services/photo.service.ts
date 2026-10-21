@@ -36,15 +36,15 @@ export class PhotoService {
         const base64Data = await this.base64FromPath(photo.webPath!);
 
         const fileName = Date.now() + '.jpeg';
-        const savedFile = await Filesystem.writeFile({
+        await Filesystem.writeFile({
             path: fileName,
             data: base64Data,
             directory: Directory.Data,
         });
-        return {
 
-            filepath: 'filename',
-            webviewPath: 'photo.webPath',
+        return {
+            filepath: fileName,
+            webviewPath: photo.webPath,
         };
     }
 
@@ -65,11 +65,29 @@ export class PhotoService {
         });
     }
 
+    public async deletePicture(photo: UserPhoto, position: number) {
+        // Quita la foto del signal reactivo por posición
+        this.photos.update((photos) => photos.filter((_, index) => index !== position));
+
+        // Actualiza Preferences
+        Preferences.set({
+            key: this.PHOTO_STORAGE,
+            value: JSON.stringify(this.photos()),
+        });
+
+        // Extrae solo el nombre del archivo y lo elimina de Directory.Data
+        const filename = photo.filepath.slice(photo.filepath.lastIndexOf('/') + 1);
+        await Filesystem.deleteFile({
+            path: filename,
+            directory: Directory.Data,
+        });
+    }
+
     public async loadSaved() {
         const { value: photoList } = await Preferences.get({ key: this.PHOTO_STORAGE });
         const photos = (photoList ? JSON.parse(photoList) : []) as UserPhoto[];
         for (const photo of photos) {
-            
+
             const file = await Filesystem.readFile({
                 path: photo.filepath,
                 directory: Directory.Data,
@@ -81,8 +99,8 @@ export class PhotoService {
         this.photos.set(photos);
     }
 }
+
 export interface UserPhoto {
     filepath: string;
     webviewPath?: string;
 }
-
