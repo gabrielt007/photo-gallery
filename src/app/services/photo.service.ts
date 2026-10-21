@@ -75,7 +75,7 @@ export class PhotoService {
             value: JSON.stringify(this.photos()),
         });
 
-        // Extrae solo el nombre del archivo y lo elimina de Directory.Data
+        // Extrae solo el nombre del archivo y lo elimina de Directory.Data (no funcionó)
         const filename = photo.filepath.slice(photo.filepath.lastIndexOf('/') + 1);
         await Filesystem.deleteFile({
             path: filename,
